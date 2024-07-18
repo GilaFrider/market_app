@@ -42,7 +42,6 @@ class CoffeeShop extends ChangeNotifier{
   }
   
   void removeFromCart(Coffee coffee) {
-    //coffee.quantity -= 1;
     _cart.remove(coffee);
     notifyListeners();
   }

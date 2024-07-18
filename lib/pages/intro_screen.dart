@@ -35,7 +35,7 @@ class IntroScreen extends StatelessWidget{
             ),
             SizedBox(height: 48),
             GestureDetector(
-              onTap: () => Navigator.push(
+              onTap: () => Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => HomePage())
               ),

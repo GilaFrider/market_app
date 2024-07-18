@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:market_app/colors.dart';
+import 'package:market_app/components/my_button.dart';
 import 'package:market_app/components/my_chip.dart';
 import 'package:market_app/model/coffee.dart';
+import 'package:market_app/model/coffee_shop.dart';
 import 'package:provider/provider.dart';
 import 'package:confetti/confetti.dart';
 
@@ -15,6 +17,11 @@ class CoffeeOrederPage extends StatefulWidget{
 
 class _CoffeeOrederPageState extends State<CoffeeOrederPage> {
    int quantity = 1;
+   late ConfettiController _confettiController;
+   void initState(){
+    super.initState();
+    _confettiController = ConfettiController(duration: Duration(seconds: 3));
+   }
    final List<bool> _sizeSelection = [true,false,false];
 
    void selectSize(String size){
@@ -37,6 +44,31 @@ class _CoffeeOrederPageState extends State<CoffeeOrederPage> {
         quantity--;
       }
     });
+   }
+void addToCart(){
+    Provider.of<CoffeeShop>(context, listen: false).addToCart(widget.coffee, quantity);
+    _confettiController.play();
+    showDialog(
+      context: context, 
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.brown,
+        title: Text(
+          'Coffee added to cart',
+          style: TextStyle(color: Colors.white),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context,true);
+            },
+            child: Text('Ok',style: TextStyle(color: Colors.white),),
+          ),
+        ],
+      )
+      ).then((_){
+        _confettiController.stop();
+      });
    }
    Widget build(BuildContext context){
     return Scaffold(
@@ -133,12 +165,34 @@ class _CoffeeOrederPageState extends State<CoffeeOrederPage> {
                       )
                     ],
                   ),
+                  SizedBox(height: 75,),
+                  MyButton(
+                    text: 'Add to Cart',
+                    onTap: addToCart,
+                  )
 
                 ],
               ),
             ),
           ),
-          
+         Align(
+            alignment: Alignment.topCenter,
+            child: ConfettiWidget(
+              confettiController: _confettiController,
+              blastDirectionality: BlastDirectionality.explosive,
+              shouldLoop: false,
+              colors: const [
+                Colors.red,
+                Colors.blue,
+                Colors.green,
+                Colors.yellow,
+                Colors.orange,
+                Colors.purple,
+                Colors.pink,
+                
+              ],
+            ),
+          ),
         ],
       ),
     );
