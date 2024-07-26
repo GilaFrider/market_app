@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:market_app/colors.dart';
 import 'package:market_app/components/bottom_nav_bar.dart';
 import 'package:market_app/components/my_drawer.dart';
-import 'package:market_app/pages/about_page.dart';
 import 'package:market_app/pages/cart_page.dart';
 import 'package:market_app/pages/shop_page.dart';
+
 class HomePage extends StatefulWidget{
   State<HomePage> createState() => _HomePageState();
 }
